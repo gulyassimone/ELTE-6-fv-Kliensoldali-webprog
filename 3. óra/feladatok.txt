@@ -1,0 +1,5 @@
+Olvasható jelszó
+Készíts olyan jelszó mezőt, amely mellett megjelenik egy gomb is, amelyre kattintva a jelszó olvasható formában megjelenik.
+
+Jóváhagyó link
+Készíts egy olyan komponenst, amely egy linket úgy fejleszt fel, hogy rákattintva megkérdezi, hogy biztos akarja-e követni a linket!

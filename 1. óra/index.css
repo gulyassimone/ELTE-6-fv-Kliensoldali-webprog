@@ -1,0 +1,7 @@
+.loading {
+    position: fixed;
+    top: 0;
+    background-color: lightblue;
+    height: 2px;
+    z-index: 9000;
+}
