@@ -4,8 +4,9 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {ScorePanel} from './ScorePanel';
-import {Button, ButtonGroup, DialogTitle, IconButton} from "@mui/material";
+import {Button, ButtonGroup, Dialog, DialogTitle, IconButton} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import AlertDialog from "../elem/Dialog";
 
 export function ScoringComponent(props) {
     const {criteria, results, onSubmit} = props;
@@ -13,23 +14,13 @@ export function ScoringComponent(props) {
     const [statistic, setStatistic] = useState([]);
     const [buttonDisable, setButtonDisable] = useState(false);
     const [showToolTip, setShowToolTip] = useState(false);
-
     useEffect(() => {
+        const requredTab = criteria.tasks.filter((elem) => elem.aspects.some((x) => x.required)).map((e) => e.name);
         setButtonDisable
         (
-            statistic.some((elem) => elem.errorCount !== 0) ||
-            statistic.some((elem) =>
-                elem.acceptedRate.filter((i) => i.required === true).length !==
-                criteria.tasks.aspects.filter((i) => i.required === true).length
-            ) ||
-            statistic.length !== criteria.tasks.length
-        );
-        console.log(statistic.some((elem) =>
-            statistic.some((elem) =>
-                elem.acceptedRate.filter((i) => i.required === true).length !==
-                criteria.tasks.map((i) => i.required === true).length
-            )
-        ))
+            statistic.some((elem) => elem.error.length !== 0) ||
+            requredTab.every((s) => statistic.some((elem) => !elem.allRequiredFieldFill || s.name === elem.name))
+        )
     }, [statistic])
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -51,7 +42,6 @@ export function ScoringComponent(props) {
         }
     })
     const handleGetStatistic = (props) => {
-        console.log(props)
         if (statistic.some((elem) => elem.name === props.name)) {
             setStatistic(statistic.map((item) =>
                 item.name === props.name
@@ -59,7 +49,8 @@ export function ScoringComponent(props) {
                         name: props.name,
                         acceptedRate: props.acceptedRate,
                         error: props.error,
-                        allRateCount: props.allRateCount
+                        allRateCount: props.allRateCount,
+                        allRequiredFieldFill: props.allRequiredFieldFill
                     }
                     : item))
         } else {
@@ -72,33 +63,14 @@ export function ScoringComponent(props) {
         }
     }
     const onCancel = () => {
-        if (statistic.error) {
-            onClose()
-        }
+        setShowToolTip(true)
     }
     const onClose = () => {
         setShowToolTip(false);
     }
     return (
         <>
-            <DialogTitle sx={{m: 0, p: 2}}
-                         open={showToolTip}>
-                A kitöltés még nincs kész!
-                {onClose ? (
-                    <IconButton
-                        aria-label="close"
-                        onClick={onClose}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon/>
-                    </IconButton>
-                ) : null}
-            </DialogTitle>
+            <AlertDialog isOpen={showToolTip} handleClose={onClose} statistic ={statistic}/>
             <Box sx={{width: '100%', bgcolor: 'background.paper'}}>
                 <Tabs value={value} onChange={handleChange} centered>
                     {criteria.tasks?.map((elem, i) => (
@@ -108,7 +80,7 @@ export function ScoringComponent(props) {
             </Box>
             <ScorePanel criteriaTab={criteria.tasks?.find((elem, i) => (i === value))} handle={onSubmit}
                         results={results} onSubmit={onSubmit} handleGetStatistic={handleGetStatistic}
-                        buttonDisable={buttonDisable} onCancel={onCancel()}/>
+                        buttonDisable={buttonDisable} onCancel={onCancel}/>
             <Box
                 sx={{
                     display: 'flex',

@@ -25,7 +25,7 @@ const StyledBox = styled(Box)(() => ({
 
 
 export function ScorePanel(props) {
-    const {criteriaTab, onSubmit,onCancel, results, handleGetStatistic, buttonDisable} = props;
+    const {criteriaTab, onSubmit, onCancel, results, handleGetStatistic, buttonDisable} = props;
     const [actualRating, setActualRating] = useState([])
     const [rowError, setRowError] = useState([]);
 
@@ -46,24 +46,35 @@ export function ScorePanel(props) {
     }, [actualRating])
     //Save button change
     useEffect(() => {
-        //statistic
-        const error = rowError.filter(
-            (elem) => criteriaTab.aspects.some(allItem => elem.id === allItem.id)
-        );
-        const acceptedRate = actualRating.filter(
-            (elem) => criteriaTab.aspects.some(allItem => elem.id === allItem.id)
-        );
-        console.log(actualRating.filter(
-            (elem) => criteriaTab.aspects.some(allItem => elem.id === allItem.id)
-        ))
-        const allRateCount = criteriaTab.aspects.length;
-        handleGetStatistic({
-            name: criteriaTab.name,
-            acceptedRate: acceptedRate,
-            error: error,
-            allRateCount: allRateCount
-        })
-    }, [actualRating, rowError])
+            //statistic
+            //actual error
+            const error = rowError.filter(
+                (elem) => criteriaTab.aspects.some(allItem => elem.id === allItem.id)
+            );
+            //accepted rate
+            const acceptedRate = actualRating.filter(
+                (elem) => criteriaTab.aspects.some(allItem => elem.id === allItem.id)
+            );
+            //allRequiredFieldFill
+            const allRequiredFieldFill = criteriaTab.aspects.every(
+                (allItem) => !allItem.required || actualRating.some(elem => elem.id === allItem.id)
+            )
+
+            //all rate
+            const allRateCount = criteriaTab.aspects.length;
+
+            handleGetStatistic({
+                name: criteriaTab.name,
+                acceptedRate: acceptedRate,
+                error: error,
+                allRateCount: allRateCount,
+                allRequiredFieldFill: allRequiredFieldFill
+            })
+        }
+
+        ,
+        [actualRating, rowError]
+    )
 
     const handlePassData = (id: number, newValue: number) => {
         const maxValue = criteriaTab.aspects.find((elem) => elem.id === id)?.maxValue;
@@ -167,10 +178,10 @@ export function ScorePanel(props) {
                         onClick={() => {
                             onSubmit(actualRating)
                         }}> Mentés</Button>
-                    <Button variant="contained" color="error" onClick={() => {
-                        onSubmit(actualRating);
-                        onCancel()
-                    }}> Elvetés</Button>
+                <Button variant="contained" color="error" onClick={() => {
+                    onSubmit(actualRating);
+                    onCancel()
+                }}> Elvetés</Button>
             </ButtonGroup>
         </StyledBox>
     );

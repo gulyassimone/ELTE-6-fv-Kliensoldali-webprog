@@ -1,6 +1,6 @@
 import {ScoringComponent} from "./scoring/ScoringComponent";
 import json_data from "./stories/example-data/the-example";
-import {Layout} from "./layout/Layout";
+import {Layout} from "./elem/Layout";
 import cloneDeep from 'lodash/cloneDeep';
 import { useState} from "react";
 
