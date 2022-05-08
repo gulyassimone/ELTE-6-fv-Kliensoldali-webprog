@@ -6,9 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useEffect} from "react";
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
-import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import ErrorList from "./List";
 
 export default function AlertDialog(props) {

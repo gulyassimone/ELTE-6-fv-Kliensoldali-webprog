@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useEffect} from "react";
 import ClearIcon from '@mui/icons-material/Clear';
+import CheckIcon from '@mui/icons-material/Check';
 import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 
 export default function ErrorList(props) {
@@ -23,6 +24,9 @@ export default function ErrorList(props) {
                         pl: 4,
                         color: (elem.error.length === 0 && elem.allRequiredFieldFill) ? "#00FF00" : "#FF0000"
                     }}>
+                        {(elem.error.length === 0 && elem.allRequiredFieldFill) ?
+                            <CheckIcon /> :
+                            <ClearIcon />}
                         {`${elem.name} ${elem.allRequiredFieldFill ? "" : "(Nincs kitöltve az összes kötelező mező)"}`}
                     </ListItemButton>
                     <Collapse in={listOpen} timeout="auto" unmountOnExit key={"Collapse " + l}>

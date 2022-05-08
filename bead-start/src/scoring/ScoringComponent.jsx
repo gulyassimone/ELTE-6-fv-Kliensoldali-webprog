@@ -4,9 +4,11 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {ScorePanel} from './ScorePanel';
-import {Button, ButtonGroup, Dialog, DialogTitle, IconButton} from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import {Button, ButtonGroup} from "@mui/material";
 import AlertDialog from "../elem/Dialog";
+import ErrorList from "../elem/List";
+import {CircularProgressWithLabel} from "../elem/CircularProgressWithLabel";
+
 
 export function ScoringComponent(props) {
     const {criteria, results, onSubmit} = props;
@@ -15,12 +17,13 @@ export function ScoringComponent(props) {
     const [buttonDisable, setButtonDisable] = useState(false);
     const [showToolTip, setShowToolTip] = useState(false);
     useEffect(() => {
-        const requredTab = criteria.tasks.filter((elem) => elem.aspects.some((x) => x.required)).map((e) => e.name);
+        const requredTab = criteria.tasks?.filter((elem) => elem.aspects.some((x) => x.required)).map((e) => e.name);
         setButtonDisable
         (
             statistic.some((elem) => elem.error.length !== 0) ||
             requredTab.every((s) => statistic.some((elem) => !elem.allRequiredFieldFill || s.name === elem.name))
         )
+
     }, [statistic])
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -68,14 +71,18 @@ export function ScoringComponent(props) {
     const onClose = () => {
         setShowToolTip(false);
     }
+
     return (
         <>
-            <AlertDialog isOpen={showToolTip} handleClose={onClose} statistic ={statistic}/>
+            <Box sx={{width: '100%', bgcolor: 'background.paper', minHeight: 200}}>
+                <ErrorList statistic={statistic}/>
+            </Box>
+            <AlertDialog isOpen={showToolTip} handleClose={onClose} statistic={statistic}/>
             <Box sx={{width: '100%', bgcolor: 'background.paper'}}>
                 <Tabs value={value} onChange={handleChange} centered>
-                    {criteria.tasks?.map((elem, i) => (
+                    {criteria.tasks?.map((elem, i) =>
                         <Tab label={elem.name} key={i}/>
-                    ))}
+                    )}
                 </Tabs>
             </Box>
             <ScorePanel criteriaTab={criteria.tasks?.find((elem, i) => (i === value))} handle={onSubmit}
