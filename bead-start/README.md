@@ -7,8 +7,8 @@ _Kliensoldali webprogramozás 1. beadandó_
 Kérlek, töltsétek ki az adataitokkal beadás előtt!
 
 ```txt
-Gulyás Simone   
-H2E9AQ
+Gulyas Simone
+h2e9aq 
 Kliensoldali webprogramozás - beadandó
 Ezt a megoldást a fent írt hallgató küldte be és készítette a Kliensoldali webprogramozás kurzus számonkéréséhez.
 Kijelentem, hogy ez a megoldás a saját munkám. Nem másoltam vagy használtam harmadik féltől 
