@@ -21,7 +21,9 @@ export function ScoringComponent(props) {
         setButtonDisable
         (
             statistic.some((elem) => elem.error.length !== 0) ||
-            requredTab.every((s) => statistic.some((elem) => !elem.allRequiredFieldFill || s.name === elem.name))
+            !requredTab.every((s) => statistic.some((elem) => {
+                return s === elem.name && elem.allRequiredFieldFill
+            }))
         )
 
     }, [statistic])
