@@ -1,0 +1,46 @@
+.root table {
+  border-collapse: collapse;
+  border: 2px solid black;
+}
+.root table td {
+  border: 1px solid black;
+}
+
+.upperNumbers td {
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+.upperNumbers td span {
+  display: block;
+  text-align: center;
+}
+
+.leftNumbers td {
+  height: 20px;
+  text-align: right;
+}
+.leftNumbers td span {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+
+.table td {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.white {
+  background-color: white;
+}
+.black {
+  background-color: black;
+}
+.gray {
+  background-color: gray;
+}
+.red {
+  background-color: red;
+}
