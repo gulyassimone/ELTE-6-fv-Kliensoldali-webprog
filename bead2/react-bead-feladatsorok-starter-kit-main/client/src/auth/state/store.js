@@ -1,4 +1,4 @@
-import { applyMiddleware, configureStore } from "@reduxjs/toolkit";
+import {configureStore } from "@reduxjs/toolkit";
 
 import authApiSlice from "./authApiSlice";
 import authSlice from "./authSlice";
@@ -10,7 +10,7 @@ const logger = createLogger({});
 
 export const store = configureStore({
   reducer: {
-    tasklist: tasklistApiSlice.reducer,
+    tasklistApi: tasklistApiSlice.reducer,
     auth: authSlice,
     authApi: authApiSlice.reducer
   },
