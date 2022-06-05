@@ -48,6 +48,7 @@ const Login = () => {
         try {
           const result = await loginFn({ strategy: 'local', email: usrname, password: password });
           if (result.data) {
+              console.log(result.data)
             dispatch(setCredentials(result.data));
           }
         } catch (err) {
