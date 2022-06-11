@@ -8,22 +8,16 @@ const transformRelatedTasks = require("../../hooks/transform-related-tasks");
 
 module.exports = {
   before: {
-    all: [authenticate("jwt")],
-    find: [
-      setField({ from: "params.user.id", as: "params.query.userId" }),
-      addTasks(),
-    ],
-    get: [
-      setField({ from: "params.user.id", as: "params.query.userId" }),
-      addTasks(),
-    ],
-    create: [setField({ from: "params.user.id", as: "data.userId" })],
+    all: [],
+    find: [addTasks()],
+    get: [addTasks()],
+    create: [authenticate("jwt"), setField({ from: "params.user.id", as: "data.userId" })],
     update: [
       disallow(),
-      setField({ from: "params.user.id", as: "params.query.userId" }),
+      setField({ from: "params.user.id", as: "params.query.userId" })
     ],
-    patch: [setField({ from: "params.user.id", as: "params.query.userId" })],
-    remove: [setField({ from: "params.user.id", as: "params.query.userId" })],
+    patch: [authenticate("jwt"), setField({ from: "params.user.id", as: "params.query.userId" })],
+    remove: [authenticate("jwt"), setField({ from: "params.user.id", as: "params.query.userId" })]
   },
 
   after: {
@@ -33,7 +27,7 @@ module.exports = {
     create: [syncTasklistsTasks()],
     update: [syncTasklistsTasks()],
     patch: [syncTasklistsTasks()],
-    remove: [],
+    remove: []
   },
 
   error: {
@@ -43,6 +37,6 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: [],
-  },
+    remove: []
+  }
 };
