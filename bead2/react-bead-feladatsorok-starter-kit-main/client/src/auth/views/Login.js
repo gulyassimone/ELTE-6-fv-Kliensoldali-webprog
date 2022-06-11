@@ -26,9 +26,7 @@ const Login = () => {
   const handleRegChange = (event) =>
     setRegisterValues({ ...registerValues, [event.target.name]: event.target.value });
   const { usrname, password } = values;
-useEffect(()=> {
-  console.log(registerValues)
-})
+
   return (
     <div className="ui placeholder segment">
       <div className="ui two column very relaxed stackable grid">
