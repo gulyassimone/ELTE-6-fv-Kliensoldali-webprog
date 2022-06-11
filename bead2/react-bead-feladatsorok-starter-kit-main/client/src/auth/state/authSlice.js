@@ -11,10 +11,14 @@ const slice = createSlice({
       state.user = user
       state.token = accessToken
     },
+    unsetCredentials : (state) => {
+      state.user = ""
+      state.token = ""
+    }
   },
 })
 
-export const { setCredentials } = slice.actions
+export const { setCredentials,unsetCredentials } = slice.actions
 
 export default slice.reducer
 
