@@ -20,47 +20,55 @@ const Login = () => {
   const { usrname, password } = values;
 
   return (
-    <form>
-      {/* <label htmlFor="usrname">Felhasználónév: </label> */}
-      <TextField
-        ref={usernameRef}
-        id="usrname"
-        name="usrname"
-        value={usrname}
-        onChange={handleChange}
-        label="Felhasználónév"
-        variant="standard"
-      />
-      <br />
-      {/* <label htmlFor="password">Jelszó: </label> */}
-      <TextField
-        ref={passwordRef}
-        type="password"
-        id="password"
-        name="password"
-        value={password}
-        onChange={handleChange}
-        label="Jelszó"
-        variant="standard"
-      />
-      <br />
-      <Button variant="contained" onClick={async () => {
-        try {
-          const result = await loginFn({ strategy: 'local', email: usrname, password: password });
-          if (result.data) {
-              console.log(result.data)
-            dispatch(setCredentials(result.data));
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }}>
-        Bejelentkezés
-      </Button>
-      <Button variant="contained" onClick={() => registerFn({ email: usrname, password: password })}>
-        Regisztráció
-      </Button>
-    </form>
+    <div className="ui placeholder segment">
+      <div className="ui two column very relaxed stackable grid">
+        <div className="column">
+          <div className="ui form">
+            <div className="field">
+              <label>Username</label>
+              <div className="ui left icon input">
+                <input ref={usernameRef} type="text" value={usrname} name="usrname"  id="usrname" onChange={handleChange} label="username"  placeholder="username"/>
+                  <i className="user icon"/>
+              </div>
+            </div>
+            <div className="field">
+              <label>Password</label>
+              <div className="ui left icon input">
+                <input  ref={passwordRef}
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={password}
+                        onChange={handleChange}
+                        label="password"
+                        placeholder="password" />
+                  <i className="lock icon"/>
+              </div>
+            </div>
+            <div className="ui blue submit button" onClick={async () => {
+              try {
+                const result = await loginFn({ strategy: "local", email: usrname, password: password });
+                if (result.data) {
+                  console.log(result.data);
+                  dispatch(setCredentials(result.data));
+                }
+              } catch (err) {
+                console.log(err);
+              }
+            }}>Login</div>
+          </div>
+        </div>
+        <div className="middle aligned column">
+          <div className="ui big button" onClick={() => registerFn({ email: usrname, password: password })}>
+            <i className="signup icon"/>
+            Sign Up
+          </div>
+        </div>
+      </div>
+      <div className="ui vertical divider">
+        Or
+      </div>
+    </div>
   );
 };
 
