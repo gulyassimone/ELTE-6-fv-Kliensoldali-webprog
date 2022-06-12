@@ -4,12 +4,13 @@ import { Button, ButtonGroup, styled, TextField } from "@mui/material";
 import { DataGrid, GridColumns } from "@mui/x-data-grid";
 import { useEffect, useRef, useState } from "react";
 import { useGetAllTaskListsQuery } from "../state/tasklistSlice";
+import { useNavigate } from 'react-router-dom';
 
 const EditedTasklist = (props) => {
-  const { editedTaskList } = props;
+  const { editedTaskList, handleEditedTaskList } = props;
   const { data } = useGetAllTaskListsQuery();
   const [taskData, setTaskData] = useState();
-
+  const navigate  = useNavigate();
   const handleChange = (event) =>
     setTaskData({ ...taskData, [event.target.name]: event.target.value });
   useEffect(() => {
@@ -94,7 +95,12 @@ const EditedTasklist = (props) => {
         />
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
           <Button> Save </Button>
-          <Button onClick={() => setTaskData(data.find((elem) => elem.id === editedTaskList.id))}> Cancel </Button>
+          <Button onClick={() => {
+
+            ;setTaskData(data.find((elem) => elem.id === editedTaskList.id));
+            handleEditedTaskList(taskData.id, false, taskData.userId);
+            navigate('/');
+          }}> Cancel </Button>
         </ButtonGroup>
       </StyledBox>
     </>;

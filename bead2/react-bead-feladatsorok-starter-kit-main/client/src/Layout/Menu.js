@@ -5,9 +5,11 @@ import { Dropdown } from "semantic-ui-react";
 import { useState } from "react";
 import { Modal } from "@mui/material";
 import Box from "@mui/material/Box";
+import { useGetAllTaskListsQuery } from "../tasklists/state/tasklistSlice";
 
 export function Menu(props) {
   const user = useSelector(selectCurrentUser);
+  const { data } = useGetAllTaskListsQuery();
   const { editedTaskList } = props
   const dispatch = useDispatch();
   const [profileModalOpen, setProfileModalOpen] = useState(false);
@@ -73,12 +75,11 @@ export function Menu(props) {
               </div>
             </div>
             <div className="field">
-              <label>Registered date: </label>
+              <label>Tasklists: </label>
               <div className="ui left icon input">
-                {user.createdAt}
+                {data? data.filter((elem)=> user.id === elem.userId).length :0}
               </div>
             </div>
-
           </Box>
         </Modal> : <></>}</>
   );

@@ -44,7 +44,8 @@ function App() {
                    element={<Tasklists handleEditedTaskList={handleEditedTaskList}
                                        editedTaskList={editedTaskList.find((elem) => (elem.userId === user.id))} />} />
             <Route path="/editedTaskList"
-                   element={<EditedTaskList editedTaskList={editedTaskList.find((elem) => (elem.userId === user.id))} />} />
+                   element={<EditedTaskList handleEditedTaskList={handleEditedTaskList}
+                                            editedTaskList={editedTaskList.find((elem) => (elem.userId === user.id))} />} />
           </> : <></>}
         </Routes>
       </Layout>
