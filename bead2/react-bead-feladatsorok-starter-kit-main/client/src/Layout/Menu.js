@@ -29,13 +29,13 @@ export function Menu() {
         <NavLink to="/" className="item">
           <i className="home icon" /> TaskApp
         </NavLink>
-        <NavLink to="/tasklist" className="item">
-          <i className="tasks icon" /> Tasklist
+        <NavLink to="/tasks" className="item">
+          <i className="tasks icon" /> Tasks
         </NavLink>
-        {user ? <><NavLink to="/myTrack" className="item">
+        {user ? <><NavLink to="/tasklists" className="item">
           <i className="file alternate outline icon" /> My Tasks
         </NavLink>
-          <NavLink to="/editTask" className="item">
+          <NavLink to="/editedTaskList" className="item">
             <i className="edit icon" /> Edit Task continue
           </NavLink>
           <div className="ui right">

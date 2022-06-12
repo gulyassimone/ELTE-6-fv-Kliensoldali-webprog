@@ -191,7 +191,7 @@ Elvárás az igényes megjelenés. Ehhez használhatsz saját CSS-t is, de kompo
 - [ ] Feladatbank: feladatra kattintva megjelenik a feladat leírása (2pt)
 - [x] Feladatbank: bejelentkezett felhasználónál ha a feladat nincs kiválasztva, akkor megjelenik a "Kiválaszt" gomb (1pt)
 - [x] Feladatbank: bejelentkezett felhasználónál ha a feladat már ki van választva, akkor megjelenik a "Kiválasztva" felirat (1pt)
-- [x] Feladatbank: "Kiválaszt" gomb helyes működése (2pt)
+- [ ] Feladatbank: "Kiválaszt" gomb helyes működése (2pt)
 - [x] Regisztráció működik (1pt)
 - [x] Bejelentkezés működik (1pt)
 - [x] Feladatsoraim: csak bejelentkezve érhető el (1pt)

@@ -8,20 +8,22 @@ const transformRelatedTasks = require("../../hooks/transform-related-tasks");
 
 module.exports = {
   before: {
-    all: [],
-    find: [addTasks()],
-    get: [
-      authenticate("jwt"),
+    all: [authenticate("jwt")],
+    find: [
       setField({ from: "params.user.id", as: "params.query.userId" }),
-      addTasks()
+      addTasks(),
     ],
-    create: [authenticate("jwt"), setField({ from: "params.user.id", as: "data.userId" })],
+    get: [
+      setField({ from: "params.user.id", as: "params.query.userId" }),
+      addTasks(),
+    ],
+    create: [setField({ from: "params.user.id", as: "data.userId" })],
     update: [
       disallow(),
-      setField({ from: "params.user.id", as: "params.query.userId" })
+      setField({ from: "params.user.id", as: "params.query.userId" }),
     ],
-    patch: [authenticate("jwt"), setField({ from: "params.user.id", as: "params.query.userId" })],
-    remove: [authenticate("jwt"), setField({ from: "params.user.id", as: "params.query.userId" })]
+    patch: [setField({ from: "params.user.id", as: "params.query.userId" })],
+    remove: [setField({ from: "params.user.id", as: "params.query.userId" })],
   },
 
   after: {
