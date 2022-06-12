@@ -87,8 +87,8 @@ const Tasks = (props) => {
   </InlineBox>;
 };
 
-const StyledBox = styled(Box)(() => ({
-  height: 400,
+export const StyledBox = styled(Box)(() => ({
+  height: 600,
   display: "block",
   width: "45%",
   "& .error": {
@@ -104,7 +104,7 @@ const StyledBox = styled(Box)(() => ({
   margin:"5px"
 }));
 
-const InlineBox = styled(Box)(() => ({
+export const InlineBox = styled(Box)(() => ({
   width: "100%",
   display: "inline-flex",
 
