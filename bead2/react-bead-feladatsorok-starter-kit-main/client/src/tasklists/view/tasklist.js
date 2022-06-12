@@ -4,16 +4,15 @@ import { DataGrid, GridColumns,  } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import cloneDeep from 'lodash/cloneDeep';
 
-
-const Tasklist = () => {
-  const { data } = useGetAllTasksQuery();
+const Tasklist = (props) => {
   const [tasklist, setTasklist] = useState([]);
   useEffect(() => {
-    if (data) {
-      setTasklist(data.map((elem) => elem));
+    if (props.data) {
+      setTasklist( cloneDeep(props.data));
     }
-  }, [data]);
+  }, [props.data]);
 
 
   const columns: GridColumns = [

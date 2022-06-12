@@ -10,7 +10,11 @@ module.exports = {
   before: {
     all: [],
     find: [addTasks()],
-    get: [addTasks()],
+    get: [
+      authenticate("jwt"),
+      setField({ from: "params.user.id", as: "params.query.userId" }),
+      addTasks()
+    ],
     create: [authenticate("jwt"), setField({ from: "params.user.id", as: "data.userId" })],
     update: [
       disallow(),
