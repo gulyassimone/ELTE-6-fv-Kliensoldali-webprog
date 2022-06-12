@@ -5,16 +5,20 @@ import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import cloneDeep from 'lodash/cloneDeep';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 const Tasklist = (props) => {
+  const {data, selectedTask, handleSelectedTask} = props;
   const [tasklist, setTasklist] = useState([]);
+
   useEffect(() => {
-    if (props.data) {
-      setTasklist( cloneDeep(props.data));
+    if (data) {
+      setTasklist( cloneDeep(data));
     }
-  }, [props.data]);
-
-
+  }, [data]);
+  function renderSelectedButton(params: GridRenderCellParams<number>) {
+    return selectedTask ? selectedTask.id === params.row.id ? <Button variant="contained" onClick={() => handleSelectedTask(params.row.id, false)}>Selected</Button> : "": <Button variant="contained" onClick={() => handleSelectedTask(params.row.id, true)}>Select</Button> ;
+  }
   const columns: GridColumns = [
       {
         field: "title",
@@ -38,7 +42,17 @@ const Tasklist = (props) => {
         headerName: "created at",
         width: 250,
         editable: false
-      }
+      },
+    {
+      field: 'selectedTask',
+      headerName: 'Selected',
+      width: 110,
+      editable: true,
+      renderCell: renderSelectedButton,
+      valueGetter: (params: GridValueGetterParams) => {
+        return selectedTask ? selectedTask.id === params.row.id:false;
+      },
+    },
     ]
   ;
 
