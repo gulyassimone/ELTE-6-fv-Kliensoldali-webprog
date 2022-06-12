@@ -5,15 +5,17 @@ import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import cloneDeep from "lodash/cloneDeep";
-import { Button } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../auth/state/authSlice";
+import { GridSelectionModel } from "@mui/x-data-grid";
 
 const Tasks = (props) => {
   const user = useSelector(selectCurrentUser);
   const { data } = useGetAllTasksQuery();
   const [task, setTasks] = useState([]);
   const { selectedTask, handleSelectedTask } = props;
+  const [selectionModel, setSelectionModel] = useState([]);
 
   useEffect(() => {
     if (data) {
@@ -27,7 +29,8 @@ const Tasks = (props) => {
     }
 
     return selectedTask.find((elem) => elem.id === params.row.id && user.id === elem.userId) ?
-      <Button variant="contained"  color="success" onClick={() => handleSelectedTask(params.row.id, false, user.id)}>Selected</Button> :
+      <Button variant="contained" color="success"
+              onClick={() => handleSelectedTask(params.row.id, false, user.id)}>Selected</Button> :
       <Button variant="contained" onClick={() => handleSelectedTask(params.row.id, true, user.id)}>Select</Button>;
 
   }
@@ -42,13 +45,7 @@ const Tasks = (props) => {
       {
         field: "description",
         headerName: "Description",
-        width: 250,
-        editable: false
-      },
-      {
-        field: "createdAt",
-        headerName: "created at",
-        width: 250,
+        width: 70,
         editable: false
       },
       {
@@ -63,20 +60,37 @@ const Tasks = (props) => {
     ]
   ;
 
-  return <StyledBox>
-    <DataGrid
-      rows={task}
-      columns={columns}
-      pageSize={10}
-      rowsPerPageOptions={[10]}
-      experimentalFeatures={{ newEditingApi: true }}
-    />
-  </StyledBox>;
+  return <InlineBox>
+    <StyledBox>
+      <DataGrid
+        rows={task}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
+        experimentalFeatures={{ newEditingApi: true }}
+        onSelectionModelChange={(newSelectionModel) => {
+          setSelectionModel(newSelectionModel);
+        }}
+        selectionModel={selectionModel}
+        {...data}
+      />
+    </StyledBox>
+    {selectionModel[0] ? <StyledBox>
+      <Typography variant="h5" gutterBottom component="div">
+        Title: {task.find((elem) => elem.id === selectionModel[0]).title}
+      </Typography>
+      <Typography variant="body1" gutterBottom>
+        Description: {task.find((elem) => elem.id === selectionModel[0]).description}
+      </Typography>
+    </StyledBox> : <></>
+    }
+  </InlineBox>;
 };
 
 const StyledBox = styled(Box)(() => ({
   height: 400,
-  width: "100%",
+  display: "block",
+  width: "45%",
   "& .error": {
     backgroundColor: `rgb(126, 10, 15, 0.1)`,
     color: "#750f0f"
@@ -86,6 +100,13 @@ const StyledBox = styled(Box)(() => ({
   },
   "& .notRequired": {
     backgroundColor: "#00000"
-  }
+  },
+  margin:"5px"
+}));
+
+const InlineBox = styled(Box)(() => ({
+  width: "100%",
+  display: "inline-flex",
+
 }));
 export default Tasks;
