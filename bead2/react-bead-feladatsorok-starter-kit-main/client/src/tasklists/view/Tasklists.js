@@ -14,7 +14,7 @@ const Tasklists = (props) => {
   const { data } = useGetAllTaskListsQuery();
   const { handleEditedTaskList, editedTaskList } = props;
   const [tasklist, setTasklist] = useState([]);
-  console.log(editedTaskList)
+
   useEffect(() => {
     if (data) {
       setTasklist(cloneDeep(data));

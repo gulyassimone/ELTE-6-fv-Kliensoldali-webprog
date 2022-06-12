@@ -34,7 +34,7 @@ function App() {
   return <>{user ?
     <></> : <Login />}
     <BrowserRouter>
-      <Layout>
+      <Layout editedTaskList={editedTaskList.find((elem) => (elem.userId === user.id))}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tasks" element={<Tasks handleSelectedTask={handleSelectedTask} selectedTask={selectedTask}
@@ -44,7 +44,7 @@ function App() {
                    element={<Tasklists handleEditedTaskList={handleEditedTaskList}
                                        editedTaskList={editedTaskList.find((elem) => (elem.userId === user.id))} />} />
             <Route path="/editedTaskList"
-                   element={<EditedTaskList editedTaskList={editedTaskList} />} />
+                   element={<EditedTaskList editedTaskList={editedTaskList.find((elem) => (elem.userId === user.id))} />} />
           </> : <></>}
         </Routes>
       </Layout>

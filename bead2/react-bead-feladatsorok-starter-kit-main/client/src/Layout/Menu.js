@@ -6,11 +6,12 @@ import { useState } from "react";
 import { Modal } from "@mui/material";
 import Box from "@mui/material/Box";
 
-export function Menu() {
+export function Menu(props) {
   const user = useSelector(selectCurrentUser);
+  const { editedTaskList } = props
   const dispatch = useDispatch();
   const [profileModalOpen, setProfileModalOpen] = useState(false);
-  console.log(user);
+
   const handleOpenProfileModal = () =>
     setProfileModalOpen(true);
   const style = {
@@ -35,9 +36,9 @@ export function Menu() {
         {user ? <><NavLink to="/tasklists" className="item">
           <i className="file alternate outline icon" /> My Tasks
         </NavLink>
-          <NavLink to="/editedTaskList" className="item">
+          {editedTaskList ? <NavLink to="/editedTaskList" className="item">
             <i className="edit icon" /> Edit Task continue
-          </NavLink>
+          </NavLink> : <></>}
           <div className="ui right">
             <i className="user icon" />
             <Dropdown text={user.fullname}>
