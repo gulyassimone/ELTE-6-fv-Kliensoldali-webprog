@@ -94,7 +94,7 @@ const EditedTasklist = (props) => {
         />
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
           <Button> Save </Button>
-          <Button> Cancel </Button>
+          <Button onClick={() => setTaskData(data.find((elem) => elem.id === editedTaskList.id))}> Cancel </Button>
         </ButtonGroup>
       </StyledBox>
     </>;
